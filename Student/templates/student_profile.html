@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .container2 {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #fff;
+            color: #000;
+            border-right: 2px solid #d9d9d9;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            padding: 20px;
+            transition: 0.5s;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar li:hover {
+            background-color: #eeeeee;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .sidebar li.active {
+            background-color: #28384a5a;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            color: #000;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .sidebar a:hover {
+            transition: .4s;
+        }
+
+        .navbar {
+            background-color: #28384a;
+            color: #EEEEEE;
+            padding: 10px 0px 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar img {
+            height: 40px;
+            width: auto;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .Logoutbtn {
+            background-color: #ff7500;
+            color: #fff;
+            border: 1px solid #ff7500;
+            padding: 10px 20px 10px 20px;
+            margin: 10px 20px 10px 0px;
+            border-radius: 10px;
+        }
+
+        .Logoutbtn:hover {
+            background-color: #294e78;
+            border: 1px solid #294e78;
+            color: #ffff;
+            transition: 0.5s;
+        }
+
+        h1 {
+            color: #28384a;
+        }
+    </style>
+</head>
+
+<body onload="loadDefaultPage()">
+
+    <div class="navbar">
+        <h1 style="color: #fff;">Placement Cell</h1>
+        <div><button class="Logoutbtn" onclick="logout()">Logout</button></div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ name }}</span></h2>
+                <!--Show username here--->
+                <li id="jobs"><i class="material-icons" style="padding-right: 10px;">work </i> Jobs</li>
+                <hr style="opacity: 0.3;">
+                <li id="learning"><i class="material-icons" style="padding-right: 10px;">school </i>
+                    Learning</li>
+                <hr style="opacity: 0.3;">
+                <li id="forum"><i class="material-icons" style="padding-right: 10px;">forum </i> Forum</li>
+                <hr style="opacity: 0.3;">
+                <li id="profile" class="active"><i class="material-icons" style="padding-right: 10px;"
+                        id="Profile">person</i>Profile</li>
+            </ul>
+        </div>
+
+        <div class="content" id="content">
+            <h1>Your Profile</h1>
+            <hr>
+            <div class="container2">
+                <div class="profile-info">
+                    <p><strong>Name: </strong> {{ name }}</p>
+                    <p><strong>Enrollment: </strong>{{ er_no }}</p>
+                </div>
+                <hr>
+
+                <div class="section">
+                    <h2>Personal Details</h2>
+                    <hr>
+                    <div class="section-content">
+                        <p><strong>Gender: </strong> {{ gender }}</p>
+                        <p><strong>Contact: </strong> {{ mob_no }}</p>
+                        <p><strong>Email: </strong> {{ email_add }}</p>
+                        <p><strong>Address: </strong> D/402, Avalon Courtyard-2, Ghodasar, Ahmedabad</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <hr>
+                    <h2>Educational Details</h2>
+                    <hr>
+                    <div class="section-content">
+                        <p><strong>University:</strong> Ganpat University</p>
+                        <p><strong>Program:</strong> {{ branch }}</p>
+                        <p><strong>Current Semester:</strong> {{ sem }}</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <hr>
+                    <h2>Projects</h2>
+                    <hr>
+                    <div class="section-content">
+                        <p><strong>Project 1:</strong> Lorem ipsum dolor sit amet</p>
+                        <p><strong>Project 2:</strong> consectetur adipiscing elit</p>
+                        <p><strong>Project 3:</strong> sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <hr>
+                    <h2>Achievements</h2>
+                    <hr>
+                    <div class="section-content">
+                        <p><strong>2019:</strong> Winner of Coding Competition</p>
+                        <p><strong>2020:</strong> Best Intern Award at XYZ Company</p>
+                        <p><strong>2021:</strong> Published research paper in Computer Science Journal</p>
+                    </div>
+                </div>
+
+                <!-- Add more sections for other details as needed -->
+
+            </div>
+        </div>
+    </div>
+    <script>
+    function logout(){
+      window.location.href="http://127.0.0.1:8000/Student/"
+    }
+        function redirectToPage(pageName) {
+            var selectedPage = pageName;
+            if (selectedPage) {
+                window.location.href = 'http://127.0.0.1:8000/Student/' + selectedPage;
+            } else {
+                alert("Please select a page to continue");
+            }
+        }
+
+        document.getElementById("jobs").addEventListener("click", function () {
+            redirectToPage('jobs');
+        });
+
+        document.getElementById("learning").addEventListener("click", function () {
+            redirectToPage('learning');
+        });
+
+        document.getElementById("forum").addEventListener("click", function () {
+            redirectToPage('forum');
+        });
+
+        document.getElementById("profile").addEventListener("click", function () {
+            redirectToPage('student_profile');
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Cell</title>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1051%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(255%2c 117%2c 0%2c 1)'%3e%3c/rect%3e%3cpath d='M0%2c416.997C77.077%2c421.957%2c147.613%2c370.242%2c204.063%2c317.528C254.896%2c270.06%2c264.62%2c196.898%2c299.892%2c136.956C340.544%2c67.87%2c425.947%2c18.753%2c427.036%2c-61.399C428.13%2c-141.97%2c353.221%2c-199.77%2c305.345%2c-264.583C253.219%2c-335.148%2c218.494%2c-432.727%2c134.365%2c-457.605C50.232%2c-482.485%2c-32.889%2c-421.797%2c-114.11%2c-388.623C-187.244%2c-358.752%2c-262.515%2c-331.962%2c-315.877%2c-273.709C-370.112%2c-214.504%2c-406.411%2c-139.512%2c-415.395%2c-59.725C-424.229%2c18.734%2c-408.351%2c100.605%2c-365.491%2c166.914C-325.333%2c229.043%2c-248.908%2c250.533%2c-187.855%2c292.308C-124.547%2c335.626%2c-76.552%2c412.071%2c0%2c416.997' fill='%23d66200'%3e%3c/path%3e%3cpath d='M1440 1124.661C1559.764 1123.5529999999999 1685.209 1162.109 1791.59 1107.0839999999998 1901.284 1050.344 1989.233 944.437 2019.7730000000001 824.773 2048.818 710.966 1986.3 598.364 1949.924 486.68399999999997 1919.5059999999999 393.297 1888.579 301.257 1824.9 226.48200000000003 1760.8310000000001 151.25 1679.694 93.774 1586.747 60.226 1489.694 25.196000000000026 1386.268 12.648000000000025 1284.833 31.549999999999955 1176.1100000000001 51.81099999999998 1077.887 102.39999999999998 991.289 171.19 890.202 251.48899999999998 754.072 331.317 745.314 460.119 736.477 590.088 889.656 668.302 949.625 783.947 1005.3969999999999 891.498 984.7090000000001 1044.502 1084.203 1113.6309999999999 1183.662 1182.7350000000001 1318.896 1125.7820000000002 1440 1124.661' fill='%23ff8b29'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1051'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+        }
+
+        .container {
+            position: absolute;
+            border-radius: 48px;
+            border-radius: 24px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(11.4px);
+            -webkit-backdrop-filter: blur(11.4px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            /* From https://css.glass */
+            background: rgba(255, 255, 255, 0.77);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(11.4px);
+            -webkit-backdrop-filter: blur(11.4px);
+            border: 1px solid rgba(255, 255, 255, 1);
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 50%;
+            height: 50%;
+
+        }
+
+        * {
+            font-family: sans-serif;
+        }
+
+        #redirectDropdown {
+            width: 280px;
+            border: 2px solid #000;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #redirectButton {
+            margin: 10px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #redirectButton:hover {
+            background-color: #ff7500;
+            color: #fff;
+            transition: 0.5s e;
+        }
+
+        h1 {
+            color: #000;
+            font-size: 40px;
+            padding-top: 60px;
+            
+        }
+
+        h4 {
+            color: #4d4d4d;
+        }
+
+       
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="headbanner">
+            <h1>PLACEMENT CELL</h1>
+        </div>
+        <h4>Please Select a user to proceed</h4>
+        <select id="redirectDropdown">
+            <option value="">Choose User type to proceed</option>
+            <option value="Student/">Student</option>
+            <option value="Company/">Company</option>
+            <option value="StudentCoordinator/">Student Coordinator</option>
+            <option value="FacultyCoordinator/">Faculty Coordinator</option>
+            <option value="TPOOfficer/">TPO</option>
+        </select><br>
+        <button id="redirectButton">Proceed</button>
+    </div>
+
+    <script>
+        document.getElementById("redirectButton").addEventListener("click", function () {
+            var selectedPage = document.getElementById("redirectDropdown").value;
+            if (selectedPage) {
+                window.location.href = selectedPage;
+            } else {
+                alert("Please select a page to continue");
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      grid-gap: 20px;
+    }
+
+    .card {
+      width: 300px;
+      background-color: #f9f9f9;
+      
+      padding: 20px;
+      border: 3px solid #28384a;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h1 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .card p {
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .apply-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #28384a;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .apply-btn:hover {
+      background-color: #294e78;
+    }
+
+    i {
+      padding-right: 10px;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      border-radius: 10px;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 60%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .applied-jobs {
+
+      overflow-x: auto;
+      /* Enable horizontal scroll */
+      white-space: nowrap;
+      /* Prevent line breaks */
+    }
+
+    .applied-job {
+      display: inline-block;
+      background-color: #28384a;
+      color: #fff;
+      border-radius: 10px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      /* Set the width of each card */
+      margin-right: 20px;
+      /* Add some space between cards */
+      vertical-align: top;
+      /* Align cards at the top */
+    }
+
+
+    .container {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: #fff;
+      color: #28384a;
+      border-right: 2px solid #d9d9d9;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      padding: 20px;
+      transition: 0.5s;
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar li:hover {
+      background-color: #eeeeee;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .sidebar li.active {
+      background-color: #28384a5a;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .sidebar a {
+      color: #000;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+
+    .sidebar a:hover {
+      transition: .4s;
+    }
+
+    .navbar {
+      background-color: #28384a;
+      color: #EEEEEE;
+      padding: 10px 0px 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar img {
+      height: 40px;
+      width: auto;
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .Logoutbtn {
+      background-color: #ff7500;
+      color: #fff;
+      border: 1px solid #ff7500;
+      padding: 10px 20px 10px 20px;
+      margin: 10px 20px 10px 0px;
+      border-radius: 10px;
+    }
+
+    .Logoutbtn:hover {
+      background-color: #294e78;
+      border: 1px solid #294e78;
+      color: #ffff;
+      transition: 0.5s;
+    }
+  </style>
+</head>
+
+<body onload="loadDefaultPage()">
+
+  <div class="navbar">
+    <h1>Placement Cell</h1>
+    <div><button class="Logoutbtn" onclick="logout()">Logout</button></div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ student_name }}</span></h2>
+        <li id="jobs" class="active"><i class="material-icons" style="padding-right: 10px;">work </i> Jobs
+        </li>
+        <hr style="opacity: 0.3;">
+        <li id="learning"><i class="material-icons" style="padding-right: 10px;">school </i> Learning</li>
+        <hr style="opacity: 0.3;">
+        <li id="forum"><i class="material-icons" style="padding-right: 10px;">forum </i> Forum</li>
+        <hr style="opacity: 0.3;">
+        <li id="profile"><i class="material-icons" style="padding-right: 10px;">person</i>Profile</li>
+      </ul>
+    </div>
+
+    <div class="content" id="content">
+
+      <div class="applied-jobs">
+        <h2>Applied Jobs</h2>
+        <hr>
+        <div class="applied-job">
+          <h3>Job Title 1</h3>
+          <p><strong>Company:</strong> ABC Corporation</p>
+          <p><strong>Location:</strong> New York</p>
+          <p><strong>Status:</strong> Applied</p>
+        </div>
+        <div class="applied-job">
+          <h3>Job Title 2</h3>
+          <p><strong>Company:</strong> XYZ Industries</p>
+          <p><strong>Location:</strong> Los Angeles</p>
+          <p><strong>Status:</strong> Applied</p>
+        </div>
+        <div class="applied-job">
+          <h3>Job Title 3</h3>
+          <p><strong>Company:</strong> QRS Enterprises</p>
+          <p><strong>Location:</strong> Chicago</p>
+          <p><strong>Status:</strong> Applied</p>
+        </div>
+
+        <!-- Add more applied job entries here -->
+      </div>
+
+      <h2 style="color: #28384a;">Upcoming Placements</h2>
+      <hr>
+      <div class="container">
+        <!---->
+        {% for job in job_data %}
+        <div class="card">
+          <h2>{{ job.Domain}}</h2>
+          <p><i class="material-icons">business</i> {{ job.Company_Name }}</p>
+          <p><i class="material-icons">location_on</i> {{ job.Location }}</p>
+          <p><i class="material-icons">attach_money</i> ₹{{ job.Min_Salary }} - ₹{{ job.Max_Salary }}</p>
+          <p><i class="material-icons">work</i> {{ job.Job_Type }}</p>
+          <button class="apply-btn" onclick="showJobDetails('{{ job.Company_ID }}')">View Details</button>
+        </div>
+        {% endfor %}
+        <!---->
+
+
+        <!-- Add more job cards here -->
+      </div>
+      <!-- Job Details Popup-->
+      {% for job in job_data %}
+      <div id="jobDetailsModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <!--<span class="close" onclick="closeModal()">&times;</span>
+          <h2>Job Details</h2>
+          <hr>
+          <p><strong>Company ID:</strong> {{ job.Company_ID }}</p>
+          <p><strong>Company Name:</strong> {{ job.Company_Name }}</p>
+          <p><strong>Job Domain:</strong> {{ job.Domain }}</p>
+          <p><strong>Job Description:</strong> {{ job.Job_Description }}</p>
+          <p><strong>Salary:</strong> ₹{{ job.Min_Salary }} - ₹{{ job.Max_Salary }}</p>
+          <p><strong>Type:</strong> {{ job.Job_Type }}</p>
+          <p><strong>Location:</strong> {{ job.Location }}</p>
+          <p><strong>Eligibility Criteria:</strong> {{ job.Eligibility_Criteria }} CGPA</p>
+          <p><strong>Company Email:</strong> {{ job.Email_Address }}</p>
+          <p><strong>Company Phone:</strong> {{ job.Phone }}</p>
+          <button class="apply-btn" onclick="applyConfirmation()">Apply</button>-->
+        </div>
+      </div>
+      {% endfor %}
+      <!-- Success Message Popup -->
+      <div id="successModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <h2>Applied Successfully!</h2>
+          <p>Your application has been submitted successfully.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+
+    function logout(){
+      window.location.href="http://127.0.0.1:8000/Student/"
+    }
+
+    function redirectToPage(pageName) {
+        var selectedPage = pageName;
+        if (selectedPage) {
+            window.location.href = 'http://127.0.0.1:8000/Student/' + selectedPage;
+        } else {
+            alert("Please select a page to continue");
+        }
+    }
+
+
+    function showJobDetails(Company_ID) {
+      window.location.href = Company_ID;
+    }
+
+
+
+
+    document.getElementById("jobs").addEventListener("click", function () {
+        redirectToPage('jobs');
+    });
+
+    document.getElementById("learning").addEventListener("click", function () {
+        redirectToPage('learning');
+    });
+
+    document.getElementById("forum").addEventListener("click", function () {
+        redirectToPage('forum');
+    });
+
+    document.getElementById("profile").addEventListener("click", function () {
+        redirectToPage('student_profile');
+    });
+</script>
+</body>
+
+</html>

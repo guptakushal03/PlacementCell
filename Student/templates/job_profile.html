@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Profile</title>
+</head>
+<body>
+    {% if job %}
+    <h2>Job Details</h2>
+    <hr>
+    <p><strong>Company ID:</strong> {{ job.Company_ID }}</p>
+    <p><strong>Company Name:</strong> {{ job.Company_Name }}</p>
+    <p><strong>Job Domain:</strong> {{ job.Domain }}</p>
+    <p><strong>Job Description:</strong> {{ job.Job_Description }}</p>
+    <p><strong>Salary:</strong> ₹{{ job.Min_Salary }} - ₹{{ job.Max_Salary }}</p>
+    <p><strong>Type:</strong> {{ job.Job_Type }}</p>
+    <p><strong>Location:</strong> {{ job.Location }}</p>
+    <p><strong>Eligibility Criteria:</strong> {{ job.Eligibility_Criteria }} CGPA</p>
+    <p><strong>Company Email:</strong> {{ job.Email_Address }}</p>
+    <p><strong>Company Phone:</strong> {{ job.Phone }}</p>
+    <p><strong>Application Link:</strong> {{ job.Application_Link }}</p>
+    {% endif %}
+    <script>
+        
+  function applyConfirmation() {
+    // Perform apply functionality here
+    alert("You have applied successfully!");
+    closeModal(); // Close the modal after applying
+  }
+
+    </script>
+</body>
+</html>
