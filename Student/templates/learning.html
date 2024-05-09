@@ -155,25 +155,13 @@
         <h1>Learning Materials</h1>
         <hr>
         <div class="container2">
+          {% for material in material_data %}
             <div class="learning-material">
-                <div class="learning-material-title">TCS Interview Questions</div>
-                <div class="learning-material-description">Here are the most frequently asked interview questions by Tata Consultancy Services.</div>
-                <button class="open-button" onclick="openMaterial('https://blog.internshala.com/tcs-interview-questions/')">Open</button>
+                <div class="learning-material-title">{{ material.material_heading }}</div>
+                <div class="learning-material-description">{{ material.material_description }}</div>
+                <button class="open-button" onclick="openMaterial('{{ material.material_link }}')">Open</button>
             </div>
-
-            <div class="learning-material">
-                <div class="learning-material-title">Learning Material 2</div>
-                <div class="learning-material-description">This is the description for Learning Material 2.</div>
-                <button class="open-button" onclick="openMaterial('https://www.example.com/material2')">Open</button>
-            </div>
-
-            <div class="learning-material">
-                <div class="learning-material-title">Learning Material 3</div>
-                <div class="learning-material-description">This is the description for Learning Material 3.</div>
-                <button class="open-button" onclick="openMaterial('https://www.example.com/material3')">Open</button>
-            </div>
-
-            <!-- Add more learning materials as needed -->
+          {% endfor %}
         </div>
     </div>
 </div>

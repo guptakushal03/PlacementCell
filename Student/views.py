@@ -77,7 +77,22 @@ def jobs(request):
 def learning(request):
     user = request.session.get('user')
     student_name = user[1]
-    return render(request, 'learning.html', {'student_name': student_name})
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM Learning_material")
+        material = cursor.fetchall()
+        material_data = []
+        for row in material:
+            material_heading, material_description, material_link = row[:3]
+
+            material_dict = {
+                'material_heading': material_heading,
+                'material_description': material_description,
+                'material_link': material_link
+            }
+
+            material_data.append(material_dict)
+    return render(request, 'learning.html', {'student_name': student_name, 'material_data': material_data})
 
 def profile(request):
     user = request.session.get('user')

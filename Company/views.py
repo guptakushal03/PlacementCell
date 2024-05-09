@@ -9,14 +9,18 @@ def company_login(request):
 
         with connection.cursor() as cursor:
             # Query the MySQL table
-            cursor.execute("SELECT * FROM admin_data WHERE Name = %s AND Password = %s", [username, password])
+            cursor.execute("SELECT * FROM job_data WHERE Company_Name = %s AND Pass = %s", [username, password])
             user = cursor.fetchone()
-
+        
         if user:
             # Authentication successful
-            return render(request, 'company_index.html')  # Render admin panel page
+            request.session['user'] = user
+            company_name = user[1]
+            
+            return render(request, 'company_index.html', {'company_name': company_name})  # Render admin panel page
         else:
             # Authentication failed
             messages.error(request, 'Invalid username or password')
 
     return render(request, 'company_login.html')
+

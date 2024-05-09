@@ -114,6 +114,8 @@ def import_studentCo_data(request):
     return render(request, 'admin_index.html')      # Redirect back to admin_index.html
 
 
+def addadmin(request):
+    return render (request, 'addadmin.html')
 
 
 # On submitting form of adding admin
