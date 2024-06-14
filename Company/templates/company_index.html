@@ -1,11 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Placement Cell | Company</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placement Cell | Company</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .container2 {
+      display: flex;
+      margin: 0px 20px 20px 20px;
+      height: 75vh;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      align-items: flex-end;
+      /* Align items at the bottom */
+    }
+
+    .participants {
+      flex: 1;
+      height: 100%;
+      padding-right: 20px;
+      border-right: 1px solid #ccc;
+      align-self: flex-start;
+      /* Align participants div at the top */
+      overflow-y: auto;
+      /* Enable vertical scrolling */
+    }
+
+    .participants h2 {
+      margin-top: 0;
+
+      color: #28384a;
+      align-items: flex-top;
+      margin-bottom: 10px;
+      /* Add margin bottom */
+    }
+
+    .participant {
+      margin-bottom: 10px;
+      /* Reduce margin */
+      display: flex;
+      font-size: 16px;
+      align-items: center;
+    }
+
+    .participant img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .chatbox {
+      flex: 3;
+      padding-left: 20px;
+    }
+
+    .chat-messages {
+      height: 100%;
+      overflow-y: auto;
+      padding-bottom: 10px;
+      border-bottom: 0px solid #ccc;
+    }
+
+    .chat-message {
+      margin-bottom: 20px;
+    }
+
+    .chat-message .sender {
+      font-weight: bold;
+      margin-right: 5px;
+      color: #28384a;
+    }
+
+    .chat-message .message {
+      background-color: #f9f9f9;
+      padding: 5px 10px;
+      border-radius: 5px;
+      max-width: 70%;
+    }
+
+    .chat-input {
+      display: flex;
+    }
+
+    .message-input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .send-button {
+      padding: 8px 16px;
+      margin-left: 10px;
+      background-color: #28384a;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .send-button:hover {
+      background-color: #294e78;
+      transition: 0.5s;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: #fff;
+      color: #000;
+      border-right: 2px solid #d9d9d9;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      padding: 20px;
+      transition: 0.5s;
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar li:hover {
+      background-color: #eeeeee;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .sidebar li.active {
+      background-color: #28384a5a;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .sidebar a {
+      color: #000;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+
+    .sidebar a:hover {
+      transition: .4s;
+    }
+
+    .participants_hr {
+      width: 100%;
+      color: #000;
+    }
+
+    .navbar {
+      background-color: #28384a;
+      color: #EEEEEE;
+      padding: 10px 0px 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar img {
+      height: 40px;
+      width: auto;
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .Logoutbtn {
+      background-color: #ff7500;
+      color: #fff;
+      border: 1px solid #ff7500;
+      padding: 10px 20px 10px 20px;
+      margin: 10px 20px 10px 0px;
+      border-radius: 10px;
+    }
+
+    .Logoutbtn:hover {
+      background-color: #294e78;
+      border: 1px solid #294e78;
+      color: #ffff;
+      transition: 0.5s;
+    }
+  </style>
 </head>
-<body>
-    Company {{ company_name }}
+
+<body onload="loadDefaultPage()">
+
+  <div class="navbar">
+    <h1>Placement Cell</h1>
+    <div><button class="Logoutbtn" onclick="logout()">Logout</button></div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ company_name }}</span></h2>
+        <!--Show username here--->
+        <li id="jobs"><i class="material-icons" style="padding-right: 10px;" id=>work </i>Post Jobs</li>
+        <hr style="opacity: 0.3;">
+        <li id="forum" class="active"><i class="material-icons" style="padding-right: 10px;">forum </i> Forum</li>
+        <hr style="opacity: 0.3;">
+        <li id="profile"><i class="material-icons" style="padding-right: 10px;">person</i>View Applicants</li>
+        <hr style="opacity: 0.3;">
+        <li id="learning"><i class="material-icons" style="padding-right: 10px;"></i></li>
+      </ul>
+    </div>
+
+    
+
+    <div class="content" id="content">
+      <div class="container2">
+        <div class="participants">
+          <h2>Participants:</h2>
+          <br>
+          <br>
+          {% for username in usernames %}
+          <div class="participant">
+            <strong>{{ username }}</strong>
+
+          </div>
+          <hr class="participants_hr">
+          {% endfor %}
+
+        </div>
+        <div class="chatbox">
+          <div class="chat-messages">
+            <div class="chat-message">
+              <table>
+              {% for message in messages %}
+              <tr>
+              <td><span class="sender">{{ message.Username }}:</span></td>
+              <td><span class="message">{{ message.Message }}</span><br></td>
+            </tr>
+              {% endfor %}
+            </table>
+            </div>
+          </div>
+          <div class="chat-input">
+            
+            <form action="{% url 'company:send_message' %}" method="post">
+              {% csrf_token %}
+              <input type="text" id="message-input" class="message-input" placeholder="Type your message..." name="message">
+              <button id="send-button" class="send-button" type="submit">Send</button>
+            </table>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      window.location.href = "http://127.0.0.1:8000/Company/"
+    }
+    function redirectToPage(pageName) {
+      var selectedPage = pageName;
+      if (selectedPage) {
+        window.location.href = 'http://127.0.0.1:8000/Company/' + selectedPage;
+      } else {
+        alert("Please select a page to continue");
+      }
+    }
+
+    document.getElementById("jobs").addEventListener("click", function () {
+      redirectToPage('jobs');
+    });
+
+    /*document.getElementById("learning").addEventListener("click", function () {
+      redirectToPage('learning');
+    });*/
+
+    document.getElementById("forum").addEventListener("click", function () {
+      redirectToPage('forum');
+    });
+
+    document.getElementById("profile").addEventListener("click", function () {
+      redirectToPage('applicants');
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var sendButton = document.getElementById("send-button");
+      var messageInput = document.getElementById("message-input");
+
+      sendButton.addEventListener("click", function () {
+        var messageContent = messageInput.value.trim();
+        if (messageContent !== "") {
+          // Send AJAX request to save the message
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "/save-message/", true);
+          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              // Message saved successfully, add it to the chatbox
+              var chatMessages = document.querySelector(".chat-messages");
+              var chatMessage = document.createElement("div");
+              chatMessage.classList.add("chat-message");
+              chatMessage.innerHTML = '<span class="sender">You:</span> <span class="message">' + messageContent + '</span>';
+              chatMessages.appendChild(chatMessage);
+
+              // Clear the message input field
+              messageInput.value = "";
+            }
+          };
+          xhr.send("content=" + encodeURIComponent(messageContent));
+        } else {
+          alert("Please enter a message.");
+        }
+      });
+    });
+
+  </script>
+
 </body>
+
 </html>

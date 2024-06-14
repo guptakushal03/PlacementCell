@@ -19,10 +19,15 @@
     <p><strong>Eligibility Criteria:</strong> {{ job.Eligibility_Criteria }} CGPA</p>
     <p><strong>Company Email:</strong> {{ job.Email_Address }}</p>
     <p><strong>Company Phone:</strong> {{ job.Phone }}</p>
-    <p><strong>Application Link:</strong> {{ job.Application_Link }}</p>
+
+    <form action="{% url 'student:apply' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="company_id" value="{{ job.Company_ID }}">  
+      <button class="apply-btn" onclick="showJobDetails('{{ job.Company_ID }}')">Apply Here</button>
+    </form>
+    <!--<p><strong>Application Link:</strong> {{ job.Application_Link }}</p>-->
     {% endif %}
     <script>
-        
   function applyConfirmation() {
     // Perform apply functionality here
     alert("You have applied successfully!");

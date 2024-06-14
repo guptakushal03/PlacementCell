@@ -147,7 +147,7 @@
             <hr style="opacity: 0.3;">
             <li id="forum"><i class="material-icons" style="padding-right: 10px;" id="Forum">forum </i> Forum</li>
             <hr style="opacity: 0.3;">
-            <li id="profile"><i class="material-icons" style="padding-right: 10px;" id="Profile">person</i>Profile</li>
+            <li id="profile"><i class="material-icons" style="padding-right: 10px;" id="Profile">person </i>Profile</li>
         </ul>
     </div>
 
@@ -155,13 +155,53 @@
         <h1>Learning Materials</h1>
         <hr>
         <div class="container2">
+          
           {% for material in material_data %}
             <div class="learning-material">
                 <div class="learning-material-title">{{ material.material_heading }}</div>
                 <div class="learning-material-description">{{ material.material_description }}</div>
                 <button class="open-button" onclick="openMaterial('{{ material.material_link }}')">Open</button>
+                {% if material.file %}
+                <button class="open-button" onclick="openFile('{{ material.file }}')">Open</button>        
+                {% endif %}
             </div>
           {% endfor %}
+          <!--
+          {% for material in material_data %}
+          <div class="learning-material">
+              <div class="learning-material-title">{{ material.material_heading }}</div>
+              <div class="learning-material-description">{{ material.material_description }}</div>
+              <button class="open-button" onclick="openMaterial('{{ material.material_link }}')">Open Link</button>
+              {% if material.file_data %}
+                  <button class="open-button" onclick="openFile('{{ material.file_data }}')">Open File</button>
+                  {% comment %} Check if file_data is a valid Base64 string {% endcomment %}
+                  {% if material.file_data %}
+                      <a href="data:application/pdf;base64,{{ material.file_data }}" download="{{ material.material_heading }}.pdf">
+                          <button class="open-button">Download File</button>
+                      </a>
+                  {% else %}
+                      <p>Error: Invalid PDF data</p>
+                  {% endif %}
+              {% endif %}
+          </div>
+      {% endfor %}
+        
+        {% for material in material_data %}
+        <div class="learning-material">
+            <div class="learning-material-title">{{ material.material_heading }}</div>
+            <div class="learning-material-description">{{ material.material_description }}</div>
+            <button class="open-button" onclick="openMaterial('{{ material.material_link }}')">Open Link</button>
+            {% if material.file_relative_path %}
+                <a href="{{ material.file_relative_path }}" download="{{ material.material_heading }}.pdf">
+                    <button class="open-button">Download File</button>
+                </a>
+            {% endif %}
+        </div>
+    {% endfor %}
+      -->
+    
+    
+
         </div>
     </div>
 </div>
@@ -196,6 +236,19 @@
     function openMaterial(url) {
         // Open the learning material in a new tab/window
         window.open(url, '_blank');
+    }
+
+    function downloadFile(fileUrl) {
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = 'file.pdf'; // Set the desired file name
+    link.click();
+  }
+
+    function openFile(filePath){
+      if (filePath){
+        window.open(filePath, '_blank');
+      }
     }
 </script>
 

@@ -221,15 +221,14 @@
   <div class="container">
     <div class="sidebar">
       <ul>
-        <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ student_name }}</span></h2>
+        <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ facultyco_name }}</span></h2>
         <!--Show username here--->
-        <li id="jobs"><i class="material-icons" style="padding-right: 10px;" id=>work </i> Jobs</li>
+        <li id="jobs"><i></i></li>
         <hr style="opacity: 0.3;">
         <li id="learning"><i class="material-icons" style="padding-right: 10px;">school </i> Learning</li>
         <hr style="opacity: 0.3;">
         <li id="forum" class="active"><i class="material-icons" style="padding-right: 10px;">forum </i> Forum</li>
         <hr style="opacity: 0.3;">
-        <li id="profile"><i class="material-icons" style="padding-right: 10px;">person</i>Profile</li>
       </ul>
     </div>
 
@@ -277,15 +276,13 @@
 
   <script>
     function logout() {
-      window.location.href = "http://127.0.0.1:8000/Student/"
+      window.location.href = "http://127.0.0.1:8000/FacultyCoordinator/"
     }
     function redirectToPage(pageName) {
       var selectedPage = pageName;
       if (selectedPage) {
-        window.location.href = 'http://127.0.0.1:8000/Student/' + selectedPage;
-      } else {
-        alert("Please select a page to continue");
-      }
+        window.location.href = 'http://127.0.0.1:8000/FacultyCoordinator/' + selectedPage;
+      } 
     }
 
     document.getElementById("jobs").addEventListener("click", function () {

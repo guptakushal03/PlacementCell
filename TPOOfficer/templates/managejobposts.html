@@ -65,6 +65,7 @@
     height: 40px;
     width: auto;
   }
+
   .content {
     flex: 1;
     padding: 20px;
@@ -115,7 +116,7 @@
     background-color: rgba(0,0,0,0.5);
   }
   .modal-content {
-    background-color: #fefefe;
+    background-color: #aaaaaa;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
@@ -134,6 +135,20 @@
     text-decoration: none;
     cursor: pointer;
   }
+  .abtn {
+    background-color: #ff7500;
+    color: #fff;
+    border: 1px solid #ff7500;
+    padding: 10px 20px 10px 20px;
+    margin: 10px 20px 10px 0px;
+    border-radius: 10px;
+  }
+  .abtn:hover {
+    background-color: #294e78;
+    border: 1px solid #294e78;
+    color: #ffff;
+    transition: 0.5s;
+  }
 </style>
 </head>
 <body>
@@ -147,7 +162,7 @@
     <div class="sidebar">
         <ul>
             <!-- Sidebar content -->
-            <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">Pulkid</span></h2>
+            <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ admin_name }}</span></h2>
             <li id="admins"><i class="material-icons">group</i><a href="#" onclick="loadPage('manageadmin.html')" active> Admins</a></li>
             <hr style="opacity: 0.3;">
             <li id="faculty"><i class="material-icons">school</i><a href="#" onclick="loadPage('managefaculty.html')">Faculty</a></li>
@@ -160,154 +175,56 @@
         <h1 style="color: #28384a;">Manage Jobs</h1>
         <hr>
         <div class="job-list" id="jobList">
-            <!-- Job listings will be displayed here dynamically -->
+          {% for job in job_data %}
+          <div class="card">
+            <h2>{{ job.Domain}}</h2>
+            <p><i class="material-icons">business</i> {{ job.Company_Name }}</p>
+            <p><i class="material-icons">location_on</i> {{ job.Location }}</p>
+            <p><i class="material-icons">attach_money</i> ₹{{ job.Min_Salary }} - ₹{{ job.Max_Salary }}</p>
+            <p><i class="material-icons">work</i> {{ job.Job_Type }}</p>
+            <button class="apply-btn abtn" onclick="showJobDetails('{{ job.Company_ID }}')">View Details</button>
+            <hr style="opacity: 1;">
+          </div>
+          {% endfor %}
         </div>
     </div>
 </div>
 
-<!-- Modal for job details -->
-<div id="jobDetailsModal" style="overflow: hidden;" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <div id="jobDetailsContent"></div>
-  </div>
-</div>
-
 <script>
-  // Dummy data for posted jobs
-  const postedJobs = [
-    { 
-      id: '1', 
-      title: 'Software Engineer', 
-      company: 'TechCorp', 
-      companyId: 'TC001',
-      salary: '$80,000 - $100,000',
-      postedDate: '2024-05-01', 
-      applicants: '21', 
-      domain: 'Software Engineering',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vestibulum nec nulla ut sagittis.',
-      type: 'Full-time',
-      location: 'San Francisco, CA',
-      eligibility: 'Bachelor\'s degree in Computer Science or related field',
-      companyEmail: 'info@techcorp.com',
-      companyPhone: '+1 (123) 456-7890'
-    },
-    { 
-      id: '2', 
-      title: 'Data Analyst', 
-      company: 'DataCo', 
-      companyId: 'DC001',
-      salary: '$70,000 - $90,000',
-      postedDate: '2024-05-02', 
-      applicants: '15', 
-      domain: 'Data Analytics',
-      description: 'Praesent fermentum erat ut massa congue, eu feugiat elit hendrerit. Vivamus sodales vel metus ac convallis.',
-      type: 'Contract',
-      location: 'New York, NY',
-      eligibility: 'Experience with SQL and data visualization tools',
-      companyEmail: 'hr@dataco.com',
-      companyPhone: '+1 (234) 567-8901'
-    },
-    { 
-      id: '3', 
-      title: 'Web Developer', 
-      company: 'WebSolutions', 
-      companyId: 'WS001',
-      salary: '$60,000 - $80,000',
-      postedDate: '2024-05-03', 
-      applicants: '3', 
-      domain: 'Web Development',
-      description: 'Sed consectetur velit vel dolor consequat, in tempor magna consectetur. Morbi vehicula, dui at ultricies.',
-      type: 'Remote',
-      location: 'Remote',
-      eligibility: 'Proficiency in HTML, CSS, and JavaScript',
-      companyEmail: 'contact@websolutions.com',
-      companyPhone: '+1 (345) 678-9012'
-    }
-  ];
 
-  // Function to display posted jobs
-  function displayPostedJobs() {
-    const jobList = document.getElementById('jobList');
-    jobList.innerHTML = '';
-
-    postedJobs.forEach(job => {
-      const jobListItem = document.createElement('div');
-      jobListItem.classList.add('job-list-item');
-      jobListItem.innerHTML = `
-        <p><strong>Title:</strong> ${job.title}</p>
-        <p><strong>Company:</strong> ${job.company}</p>
-        <p><strong>Posted Date:</strong> ${job.postedDate}</p>
-        <p><strong>Total Applicants:</strong> ${job.applicants}</p>
-        <button class="listbutton" onclick="viewJobDetails('${job.id}')">View Details</button>
-        <button class="listbutton" onclick="deleteJob('${job.id}')">Delete</button>
-      `;
-      jobList.appendChild(jobListItem);
-    });
-  }
-
-  // Function to display job details modal
-  function viewJobDetails(jobId) {
-    const job = postedJobs.find(job => job.id === jobId);
-    if (job) {
-      const modal = document.getElementById('jobDetailsModal');
-      const modalContent = document.getElementById('jobDetailsContent');
-      modalContent.innerHTML = `
-        <h2>${job.title}</h2>
-        <p><strong>Company:</strong> ${job.company}</p>
-        <p><strong>Company ID:</strong> ${job.companyId}</p>
-        <p><strong>Salary:</strong> ${job.salary}</p>
-        <p><strong>Posted Date:</strong> ${job.postedDate}</p>
-        <p><strong>Total Applicants:</strong> ${job.applicants}</p>
-        <p><strong>Job Domain:</strong> ${job.domain}</p>
-        <p><strong>Job Description:</strong> ${job.description}</p>
-        <p><strong>Type:</strong> ${job.type}</p>
-        <p><strong>Location:</strong> ${job.location}</p>
-        <p><strong>Eligibility Criteria:</strong> ${job.eligibility}</p>
-        <p><strong>Company Email:</strong> ${job.companyEmail}</p>
-        <p><strong>Company Phone:</strong> ${job.companyPhone}</p>
-      `;
-      modal.style.display = 'block';
-    }
-  }
-
-  // Function to close modal
-  function closeModal() {
-    const modal = document.getElementById('jobDetailsModal');
-    modal.style.display = 'none';
-  }
-
-  // Dummy function for deleting a job
-  function deleteJob(jobId) {
-    // Logic for deleting job goes here
-    console.log(`Deleting job with ID: ${jobId}`);
-  }
-
-  // Dummy function for logging out
   function logout() {
-    alert("Logging out...");
-  }
-
-  // Dummy function for loading a page
-  function loadPage(pageName) {
-    alert("Loading " + pageName);
+    window.location.href = "http://127.0.0.1:8000/TPOOfficer/"
   }
 
   // Dummy function for redirecting to a page
   function redirectToPage(pageName) {
-    var selectedPage = pageName + '.html';
+    var selectedPage = pageName;
     if (selectedPage) {
-      window.location.href = selectedPage;
+      window.location.href = 'http://127.0.0.1:8000/TPOOfficer/' + selectedPage;
     } else {
       alert("Please select a page to continue");
     }
   }
 
+  document.getElementById("admins").addEventListener("click", function () {
+      redirectToPage('manageadmin');
+    });
+
+    document.getElementById("faculty").addEventListener("click", function () {
+      redirectToPage('managefaculty');
+    });
+
+    document.getElementById("posts").addEventListener("click", function () {
+      redirectToPage('managejobs');
+    });
+
+    function showJobDetails(Company_ID) {
+      window.location.href = Company_ID;
+    }
+
   // Dummy function for active sidebar link
   document.getElementById("posts").classList.add("active");
 
-  // Display posted jobs on page load
-  displayPostedJobs();
 </script>
 
 </body>

@@ -13,10 +13,12 @@ def facultyCo_login(request):
 
         with connection.cursor() as cursor:
             # Query the MySQL table
-            cursor.execute("SELECT * FROM facultyCo_data WHERE Employee_Id = %s AND Password = %s", [username, password])
+            cursor.execute("SELECT * FROM facultyCo_data WHERE EmpId = %s AND Password = %s", [username, password])
             user = cursor.fetchone()
 
         if user:
+            request.session['user'] = user
+            facultyco_name = user[1]
             with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM Learning_Material")
                 materials = cursor.fetchall()
@@ -31,7 +33,7 @@ def facultyCo_login(request):
                     }
 
                     material_data.append(material_dict)
-                return render(request, 'facultyCo_index.html', {'material_data': material_data})
+                return render(request, 'facultyCo_index.html', {'facultyco_name': facultyco_name,'material_data': material_data})
         else:
             # Authentication failed
             messages.error(request, 'Invalid username or password')
@@ -86,9 +88,9 @@ def import_student_data(request):
 
 
 def add_lecture_material(request):
-    heading = request.POST.get('heading', '')
-    description = request.POST.get('description', '')
-    link = request.POST.get('link', '')
+    heading = request.POST.get('heading')
+    description = request.POST.get('description')
+    link = request.POST.get('link')
 
     print("Details", heading, description, link)
     # CREATE TABLE Learning_Material (Heading VARCHAR(255), Material_Description VARCHAR(255), Link VARCHAR(255));
@@ -98,3 +100,44 @@ def add_lecture_material(request):
 
         cursor.execute("Insert INTO learning_material (Heading, Material_Description, Link) VALUES (%s, %s, %s)", [heading, description, link])
     return render(request, 'facultyCo_index.html')
+
+def forum(request):
+    user = request.session.get('user')
+    usernames = request.session.get('usernames')
+    facultyco_name = user[1]
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM Messages")
+        fetched_messages = cursor.fetchall()
+        messages = []
+        for row in fetched_messages:
+            Username, Message = row[:2]
+        
+            message_dict = {
+                'Username': Username,
+                'Message': Message
+            }
+            messages.append(message_dict)                
+
+    return render(request, 'forum_fco.html', {'facultyco_name': facultyco_name, 'usernames': usernames, 'messages': messages})
+
+
+def learning(request):
+    user = request.session.get('user')
+    request.session['user'] = user
+    facultyco_name = user[1]
+    with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM Learning_Material")
+                materials = cursor.fetchall()
+                material_data = []
+                for row in materials:
+                    heading, description, link = row[:3]
+
+                    material_dict = {
+                        'heading': heading,
+                        'description': description,
+                        'link': link,
+                    }
+
+                    material_data.append(material_dict)
+                return render(request, 'facultyCo_index.html', {'facultyco_name': facultyco_name,'material_data': material_data})

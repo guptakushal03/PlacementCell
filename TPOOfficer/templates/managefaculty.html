@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    display: flex;
+  }
+  .container2 {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  .sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
+    color: #000;
+    border-right: 2px solid #d9d9d9;
+    padding: 20px;
+  }
+  .sidebar h2 {
+    margin-top: 0;
+  }
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .sidebar li {
+    padding: 20px;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+  }
+  .sidebar li:hover {
+    background-color: #eeeeee;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .sidebar li.active {
+    background-color: #28384a5a;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .sidebar a {
+    color: #000;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  .sidebar a:hover {
+    transition: .4s;
+  }
+  .navbar {
+    background-color: #28384a;
+    color: #EEEEEE;
+    padding: 10px 0px 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navbar img {
+    height: 40px;
+    width: auto;
+  }
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  .Logoutbtn {
+    background-color: #ff7500;
+    color: #fff;
+    border: 1px solid #ff7500;
+    padding: 10px 20px 10px 20px;
+    margin: 10px 20px 10px 0px;
+    border-radius: 10px;
+  }
+  .Logoutbtn:hover {
+    background-color: #294e78;
+    border: 1px solid #294e78;
+    color: #ffff;
+    transition: 0.5s;
+  }
+
+  /* Additional styles for Learning Materials */
+  h2 {
+    color: #333;
+  }
+  .learning-material {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  .learning-material-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .learning-material-description {
+    margin-bottom: 10px;
+    color: #666;
+  }
+  h1 {
+    color: #28384a;
+  }
+  .open-button {
+    padding: 8px 16px;
+    background-color: #28384a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .open-button:hover {
+    background-color: #294e78;
+  }
+  .admin-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .admin-list li {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .admin-list button {
+    padding: 5px 10px;
+    background-color: #28384a;
+    color: #d9d9d9;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .admin-list-buttons {
+    margin-bottom: 20px;
+  }
+  .admin-list-buttons button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .addbuttons{
+    background-color: #28384a;
+    color: #d9d9d9;
+    border-radius: 5px;
+  }
+  table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd; /* Light grey border for the table */
+    }
+
+    th, td {
+        border: 1px solid #ddd; /* Light grey border for table cells */
+        padding: 8px;
+        text-align: left;
+    }
+
+    .abtn {
+    background-color: #ff7500;
+    color: #fff;
+    border: 1px solid #ff7500;
+    padding: 10px 20px 10px 20px;
+    margin: 10px 20px 10px 0px;
+    border-radius: 10px;
+  }
+  .abtn:hover {
+    background-color: #294e78;
+    border: 1px solid #294e78;
+    color: #ffff;
+    transition: 0.5s;
+  }
+
+</style>
+</head>
+<body onload="loadDefaultPage()">
+
+<div class="navbar">
+    <h1 style="color: #fff;">Placement Cell</h1>
+    <div><button class="Logoutbtn" onclick="logout()">Logout</button></div>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        <ul>
+            <!--Show username here--->
+            <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ admin_name }}</span></h2><!--Show username here--->
+            <li id="admins"><i class="material-icons">group</i><a href="#" onclick="" active> Admins</a></li>
+            <hr style="opacity: 0.3;">
+            <li id="faculty"><i class="material-icons">school</i><a href="#" onclick="loadPage('managefaculty.html')">Faculty</a></li>
+            <hr style="opacity: 0.3;">
+            <li id="posts"><i class="material-icons">work</i><a href="#" onclick="loadPage('student_jobs/chatforum.html')">Jobs Posts</a></li>
+        </ul>
+    </div>
+
+    <div class="content" id="content">
+        <h1>Manage Faculty</h1>
+        <hr>
+        <div class="admin-list-buttons">
+            <button class="addbuttons" onclick="window.location.href = 'http://127.0.0.1:8000/TPOOfficer/addfaculty'">Add Faculty</button>
+            <form action="{% url 'TPPOfficer:import_faculty' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="file" name="file" accept=".xlsx">
+              <button type="submit" class="abtn">Import Data</button>
+            </form>
+        </div>
+        <div class="admin-list">
+            <ul id="facultyList">
+
+              <table>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                </tr> 
+                {% for facultyco in facultyco_data %}
+                <tr>
+                    <td>{{facultyco.EmpID}}</td>
+                    <td>{{facultyco.Name}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            </ul>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+
+  function logout() {
+    window.location.href = "http://127.0.0.1:8000/TPOOfficer/"
+  }
+
+  function redirectToPage(pageName) {
+    var selectedPage = pageName;
+    if (selectedPage) {
+      window.location.href = 'http://127.0.0.1:8000/TPOOfficer/' + selectedPage;
+    } else {
+      alert("Please select a page to continue");
+    }
+  }
+
+  document.getElementById("admins").addEventListener("click", function () {
+    redirectToPage('manageadmin');
+  });
+
+  document.getElementById("faculty").addEventListener("click", function () {
+    redirectToPage('managefaculty');
+  });
+
+  document.getElementById("posts").addEventListener("click", function () {
+    redirectToPage('managejobs');
+  });
+
+
+
+  function openMaterial(url) {
+    // Open the learning material in a new tab/window
+    window.open(url, '_blank');
+  }
+  
+  document.getElementById("faculty").classList.add("active");
+</script>
+
+</body>
+</html>

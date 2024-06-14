@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Cell | Company</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            background-color: #28384a;
+            color: white;
+            padding: 10px 0;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        input[type="submit"] {
+            height: 45px;
+            width:250px;
+            display: block;
+            margin: 0 auto;
+            background-color: #28384a;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color:#28384a;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Jop Posting Form</h2>
+        <form action="{% url 'company:post_job' %}" method="post" enctype="multipart/form-data" id="jobForm">
+            {% csrf_token %}
+            <!-- ID, Name, -->
+            <label for="jobDomain">Job Domain:</label>
+            <input type="text" id="jobDomain" name="jobDomain" required>
+
+            <label for="jobDescription">Job Description:</label>
+            <textarea id="jobDescription" name="jobDescription" rows="4" required></textarea>
+
+            <label for="minSalary">Min Salary:</label>
+            <input type="text" id="minSalary" name="minSalary" required>
+            
+            <label for="maxSalary">Max Salary:</label>
+            <input type="text" id="maxSalary" name="maxSalary" required>
+
+            <label for="jobType">Type of Job:</label>
+            <input type="text" id="jobType" name="jobType" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="eligibility">Eligibility Criteria:</label>
+            <input type="number" id="eligibility" name="eligibility" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="number" name="number" required>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        function getCurrentDateTime() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = ('0' + (now.getMonth() + 1)).slice(-2);
+            var day = ('0' + now.getDate()).slice(-2);
+            var hours = ('0' + now.getHours()).slice(-2);
+            var minutes = ('0' + now.getMinutes()).slice(-2);
+            var seconds = ('0' + now.getSeconds()).slice(-2);
+            var dateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+            return dateTime;
+        }
+
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        function validatePhoneNumber(phone) {
+            var re = /^\d{10}$/;
+            return re.test(phone);
+        }
+
+        window.onload = function () {
+            document.getElementById('createdAt').value = getCurrentDateTime();
+
+            var form = document.getElementById('jobForm');
+            var emailInput = document.getElementById('email');
+            var phoneInput = document.getElementById('phoneNumber');
+            var emailError = document.getElementById('emailError');
+            var phoneError = document.getElementById('phoneError');
+
+            form.addEventListener('submit', function (event) {
+                var valid = true;
+
+                if (!validateEmail(emailInput.value)) {
+                    valid = false;
+                    emailError.textContent = 'Invalid email format';
+                } else {
+                    emailError.textContent = '';
+                }
+
+                if (!validatePhoneNumber(phoneInput.value)) {
+                    valid = false;
+                    phoneError.textContent = 'Invalid phone number format (10 digits)';
+                } else {
+                    phoneError.textContent = '';
+                }
+
+                if (!valid) {
+                    event.preventDefault();
+                }
+            });
+        };
+    </script>
+</body>
+</html>

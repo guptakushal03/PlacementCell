@@ -17,6 +17,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       grid-gap: 20px;
+      overflow-x: hidden;
     }
 
     .card {
@@ -209,7 +210,7 @@
   </style>
 </head>
 
-<body onload="loadDefaultPage()">
+<body>
 
   <div class="navbar">
     <h1>Placement Cell</h1>
@@ -227,12 +228,12 @@
         <hr style="opacity: 0.3;">
         <li id="forum"><i class="material-icons" style="padding-right: 10px;">forum </i> Forum</li>
         <hr style="opacity: 0.3;">
-        <li id="profile"><i class="material-icons" style="padding-right: 10px;">person</i>Profile</li>
+        <li id="profile"><i class="material-icons" style="padding-right: 10px;">person </i>Profile</li>
       </ul>
     </div>
 
     <div class="content" id="content">
-
+      <!--
       <div class="applied-jobs">
         <h2>Applied Jobs</h2>
         <hr>
@@ -255,10 +256,10 @@
           <p><strong>Status:</strong> Applied</p>
         </div>
 
-        <!-- Add more applied job entries here -->
-      </div>
+        <!-- Add more applied job entries here 
+      </div>-->
 
-      <h2 style="color: #28384a;">Upcoming Placements</h2>
+      <h2 style="color: #28384a;">Placements Offers</h2>
       <hr>
       <div class="container">
         <!---->
@@ -278,10 +279,10 @@
         <!-- Add more job cards here -->
       </div>
       <!-- Job Details Popup-->
-      {% for job in job_data %}
+      <!--{% for job in job_data %}
       <div id="jobDetailsModal" class="modal">
         <!-- Modal content -->
-        <div class="modal-content">
+        <!--<div class="modal-content">
           <!--<span class="close" onclick="closeModal()">&times;</span>
           <h2>Job Details</h2>
           <hr>
@@ -296,7 +297,7 @@
           <p><strong>Company Email:</strong> {{ job.Email_Address }}</p>
           <p><strong>Company Phone:</strong> {{ job.Phone }}</p>
           <button class="apply-btn" onclick="applyConfirmation()">Apply</button>-->
-        </div>
+        <!--</div>
       </div>
       {% endfor %}
       <!-- Success Message Popup -->

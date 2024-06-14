@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student</title>
+  <title>Placement Cell | Company</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
@@ -17,14 +17,14 @@
 
     .container2 {
       display: flex;
-      margin: 0px 20px 20px 20px;
-      height: 75vh;
-      padding: 20px;
+      margin: 0px ;
+      height: max-content;
+      padding: 0px;
       border: 1px solid #ccc;
       border-radius: 10px;
 
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      align-items: flex-end;
+      
       /* Align items at the bottom */
     }
 
@@ -190,7 +190,6 @@
 
     .content {
       flex: 1;
-      padding: 20px;
     }
 
     .Logoutbtn {
@@ -208,6 +207,13 @@
       color: #ffff;
       transition: 0.5s;
     }
+
+    .pre{
+      width: max-content;
+      margin: 10px;
+      background-color: #d9d9d9;
+      padding: 30px;
+    }
   </style>
 </head>
 
@@ -221,68 +227,47 @@
   <div class="container">
     <div class="sidebar">
       <ul>
-        <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ student_name }}</span></h2>
+        <h2 style="padding-bottom: 10px;">Welcome, <span style="color: #76ABAE;">{{ company_name }}</span></h2>
         <!--Show username here--->
-        <li id="jobs"><i class="material-icons" style="padding-right: 10px;" id=>work </i> Jobs</li>
+        <li id="jobs"><i class="material-icons" style="padding-right: 10px;" id=>work </i>Post Jobs</li>
         <hr style="opacity: 0.3;">
-        <li id="learning"><i class="material-icons" style="padding-right: 10px;">school </i> Learning</li>
+        <li id="forum" class=""><i class="material-icons" style="padding-right: 10px;">forum </i> Forum</li>
         <hr style="opacity: 0.3;">
-        <li id="forum" class="active"><i class="material-icons" style="padding-right: 10px;">forum </i> Forum</li>
+        <li id="profile" class="active"><i class="material-icons" style="padding-right: 10px;">person</i>View Applicants</li>
         <hr style="opacity: 0.3;">
-        <li id="profile"><i class="material-icons" style="padding-right: 10px;">person</i>Profile</li>
+        <li id="learning"><i class="material-icons" style="padding-right: 10px;"></i></li>
       </ul>
     </div>
 
+
+
     <div class="content" id="content">
       <div class="container2">
-        <div class="participants">
-          <h2>Participants:</h2>
-          <br>
-          <br>
-          {% for username in usernames %}
-          <div class="participant">
-            <strong>{{ username }}</strong>
+        {% for stu in stu_data %}
+        <div class="pre">
 
-          </div>
-          <hr class="participants_hr">
-          {% endfor %}
-
+          <b>Enrollment No: </b>{{ stu.Enrollment_No }}<br>
+          <b>Name: </b>{{ stu.Name }}<br>
+          <b>Gender: </b>{{ stu.Gender }}<br>
+          <b>Mobile_No: </b>{{ stu.Mobile_No }}<br>
+          <b>Email_Address: </b>{{ stu.Email_Address }}<br>
+          <b>Branch: </b>{{ stu.Branch }}<br>
+          <b>Semester: </b>{{ stu.Semester }}
+          <br>
         </div>
-        <div class="chatbox">
-          <div class="chat-messages">
-            <div class="chat-message">
-              <table>
-              {% for message in messages %}
-              <tr>
-              <td><span class="sender">{{ message.Username }}:</span></td>
-              <td><span class="message">{{ message.Message }}</span><br></td>
-            </tr>
-              {% endfor %}
-            </table>
-            </div>
-          </div>
-          <div class="chat-input">
-            
-            <form action="{% url 'student:send_message' %}" method="post">
-              {% csrf_token %}
-              <input type="text" id="message-input" class="message-input" placeholder="Type your message..." name="message">
-              <button id="send-button" class="send-button" type="submit">Send</button>
-            </table>
-            </form>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
 
   <script>
     function logout() {
-      window.location.href = "http://127.0.0.1:8000/Student/"
+      window.location.href = "http://127.0.0.1:8000/Company/"
     }
     function redirectToPage(pageName) {
       var selectedPage = pageName;
       if (selectedPage) {
-        window.location.href = 'http://127.0.0.1:8000/Student/' + selectedPage;
+        window.location.href = 'http://127.0.0.1:8000/Company/' + selectedPage;
       } else {
         alert("Please select a page to continue");
       }
@@ -292,16 +277,16 @@
       redirectToPage('jobs');
     });
 
-    document.getElementById("learning").addEventListener("click", function () {
+    /*document.getElementById("learning").addEventListener("click", function () {
       redirectToPage('learning');
-    });
+    });*/
 
     document.getElementById("forum").addEventListener("click", function () {
       redirectToPage('forum');
     });
 
     document.getElementById("profile").addEventListener("click", function () {
-      redirectToPage('student_profile');
+      redirectToPage('applicants');
     });
 
     document.addEventListener("DOMContentLoaded", function () {
