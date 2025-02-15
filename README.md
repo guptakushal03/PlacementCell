@@ -24,8 +24,7 @@ The **Placement Cell** project is designed to streamline and automate the placem
 Before running the project, ensure you have the following installed:
 
 - Python (or Node.js, if applicable)
-- MySQL/PostgreSQL (or any database you're using)
-- Any additional dependencies specified in `requirements.txt` or `package.json`
+- MySQL
 
 
 ---
